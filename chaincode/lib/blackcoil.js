@@ -157,7 +157,7 @@ class BlackCoil extends Contract {
         return blackCoilAsBytes.toString();
     }
 
-    async changeBlackCoilOwner(ctx, globalId, newOwner) {
+    async changeOwnerBlackCoil(ctx, globalId, newOwner) {
         blackCoilAsBytes = await ctx.stub.getState(globalId);
         if (!blackCoilAsBytes || blackCoilAsBytes.length === 0) {
             throw new Error(`Black Coil with id "${globalId}" does not exist`);
