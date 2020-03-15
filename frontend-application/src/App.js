@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import NavBar from './components/NavBar'
+import AssetInfo from './components/AssetInfo';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -11,7 +12,10 @@ class App extends Component {
     const { classes } = this.props;
     return (
       <div>
-          Hello World
+        <NavBar className={classes.nav}/>
+        <br/>
+        <br/>
+        <AssetInfo />
       </div>
     )
   }
