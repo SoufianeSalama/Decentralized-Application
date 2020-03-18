@@ -1,0 +1,24 @@
+OrdererOrgs:
+  - Name: OrderingService
+    Domain: aperam.com
+    Specs:
+      - Hostname: orderer
+
+PeerOrgs:
+  - Name: Gnk
+    Domain: gnk.aperam.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+
+    Users: 
+      Count: 1
+      
+  - Name: Corp
+    Domain: corp.aperam.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+
+    Users: 
+      Count: 1

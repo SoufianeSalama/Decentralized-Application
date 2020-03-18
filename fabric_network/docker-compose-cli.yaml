@@ -1,0 +1,72 @@
+version: '2'
+
+volumes:
+  orderer.aperam.com:
+  peer0.gnk.aperam.com:
+  peer0.corp.aperam.com:
+
+
+networks:
+  byfn:
+
+services:
+
+  orderer.aperam.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.aperam.com
+    container_name: orderer.aperam.com
+    networks:
+      - byfn
+
+  peer0.gnk.aperam.com:
+    container_name: peer0.gnk.aperam.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.gnk.aperam.com
+    networks:
+      - byfn
+
+  
+  peer0.corp.aperam.com:
+    container_name: peer0.corp.aperam.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.corp.aperam.com
+    networks:
+      - byfn
+
+ 
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- CORE_LOGGING_LEVEL=DEBUG
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.gnk.aperam.com:7051
+      - CORE_PEER_LOCALMSPID=GnkMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/fabric-samples/aperam/crypto-config/peerOrganizations/gnk.aperam.com/peers/peer0.gnk.aperam.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/fabric-samples/aperam/crypto-config/peerOrganizations/gnk.aperam.com/peers/peer0.gnk.aperam.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/fabric-samples/aperam/crypto-config/peerOrganizations/corp.aperam.com/peers/peer0.corp.aperam.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/fabric-samples/aperam/crypto-config/peerOrganizations/corp.aperam.com/users/Admin@corp.aperam.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/chain
+        - ./crypto-config:/opt/gopath/fabric-samples/aperam/crypto-config/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/fabric-samples/aperam/channel-artifacts
+
+    depends_on:
+      - orderer.aperam.com
+      - peer0.gnk.aperam.com
+      - peer0.corp.aperam.com
+    networks:
+      - byfn
