@@ -36,7 +36,7 @@ Organizations:
       - Host: peer0.gnk.aperam.com
         Port: 7051
 
-  - &Copr
+  - &Corp
     Name: CorpMSP
     ID: CorpMSP
     MSPDir: crypto-config/peerOrganizations/corp.aperam.com/msp
@@ -161,7 +161,7 @@ Profiles:
             - *Gnk 
             - *Corp
             
-    aperamChannel:
+    AperamChannel:
       Consortium: MyFirstConsortium
       Application:
         <<: *ApplicationDefaults

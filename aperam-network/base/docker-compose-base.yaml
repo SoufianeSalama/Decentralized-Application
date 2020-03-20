@@ -36,7 +36,10 @@ services:
       - GODEBUG=netdns=go
       - CORE_PEER_ID=peer0.gnk.aperam.com
       - CORE_PEER_ADDRESS=peer0.gnk.aperam.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.gnk.aperam.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.gnk.aperam.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.gnk.aperam.com:8051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.gnk.aperam.com:7051
       - CORE_PEER_LOCALMSPID=GnkMSP
     volumes:
@@ -56,9 +59,12 @@ services:
     environment:
       - GODEBUG=netdns=go
       - CORE_PEER_ID=peer0.corp.aperam.com
-      - CORE_PEER_ADDRESS=peer0.corp.aperam.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.corp.aperam.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.corp.aperam.com:7051
+      - CORE_PEER_ADDRESS=peer0.corp.aperam.com:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.corp.aperam.com:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.corp.aperam.com:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.corp.aperam.com:9051
       - CORE_PEER_LOCALMSPID=CorpMSP
     volumes:
         - /var/run/:/host/var/run/
@@ -66,4 +72,4 @@ services:
         - ../crypto-config/peerOrganizations/corp.aperam.com/peers/peer0.corp.aperam.com/tls:/etc/hyperledger/fabric/tls
         - peer0.corp.aperam.com:/var/hyperledger/production
     ports:
-      - 9051:7051
+      - 9051:9051

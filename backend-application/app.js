@@ -42,8 +42,13 @@ app.get('/query/:id', async (req, res) => {
 app.get('/query', async (req, res) => {
     let networkConnection = await fabricNetworkConn.connectToNetwork();
     let response = await fabricNetworkConn.invoke(networkConnection, 'queryAllCars', '');
-    let parsedResponse = await JSON.parse(response);
-    res.send(parsedResponse);
+
+    if (response.error) {
+        res.send("Fault: " + response.error);
+    } else {
+        let parsedResponse = await JSON.parse(response);
+        res.send(parsedResponse);
+    }
 });
 
 

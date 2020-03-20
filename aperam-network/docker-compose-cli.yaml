@@ -1,3 +1,8 @@
+# By Soufiane Salama
+# For Fabric version 1.4.4
+# based on byfn.sh (Building Your First Network) example script
+# 
+
 version: '2'
 
 volumes:
@@ -53,8 +58,8 @@ services:
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/fabric-samples/aperam/crypto-config/peerOrganizations/gnk.aperam.com/peers/peer0.gnk.aperam.com/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/opt/gopath/fabric-samples/aperam/crypto-config/peerOrganizations/gnk.aperam.com/peers/peer0.gnk.aperam.com/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/fabric-samples/aperam/crypto-config/peerOrganizations/corp.aperam.com/peers/peer0.corp.aperam.com/tls/ca.crt
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/fabric-samples/aperam/crypto-config/peerOrganizations/corp.aperam.com/users/Admin@corp.aperam.com/msp
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/fabric-samples/aperam/crypto-config/peerOrganizations/gnk.aperam.com/peers/peer0.gnk.aperam.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/fabric-samples/aperam/crypto-config/peerOrganizations/gnk.aperam.com/users/Admin@gnk.aperam.com/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
