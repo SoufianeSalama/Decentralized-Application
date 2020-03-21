@@ -14,13 +14,13 @@ starttime=$(date +%s)
 
 # Setting the language to JS
 CC_RUNTIME_LANGUAGE=node # chaincode runtime language is node.js
-CC_SRC_PATH=/opt/gopath/src/github.com/chaincode/fabcar/javascript
+CC_SRC_PATH=/opt/gopath/src/chain/fabcar/javascript
 
 # clean the keystore
 rm -rf ./hfc-key-store
 
 # launch network; create channel and join peer to channel
-cd ../aperam-network
+cd ../aperam
 ./launchNetwork.sh
 # echo y | ./byfn.sh up -a -n -s couchdb
 # # Parameters explanation
@@ -29,13 +29,15 @@ cd ../aperam-network
 # # -s couchdb    database type (leveldb = default)
 
 
+CONFIG_ROOT=/opt/gopath/fabric-samples/aperam
 
-CONFIG_ROOT=/opt/gopath/src/github.com/hyperledger/fabric/peer
-ORG1_MSPCONFIGPATH=${CONFIG_ROOT}/crypto/peerOrganizations/gnk.aperam.com/users/Admin@gnk.aperam.com/msp
-ORG1_TLS_ROOTCERT_FILE=${CONFIG_ROOT}/crypto/peerOrganizations/gnk.aperam.com/peers/peer0.gnk.aperam.com/tls/ca.crt
-ORG2_MSPCONFIGPATH=${CONFIG_ROOT}/crypto/peerOrganizations/corp.aperam.com/users/Admin@corp.aperam.com/msp
-ORG2_TLS_ROOTCERT_FILE=${CONFIG_ROOT}/crypto/peerOrganizations/corp.aperam.com/peers/peer0.corp.aperam.com/tls/ca.crt
-ORDERER_TLS_ROOTCERT_FILE=${CONFIG_ROOT}/crypto/ordererOrganizations/aperam.com/orderers/orderer.aperam.com/msp/tlscacerts/tlsca.aperam.com-cert.pem
+ORG1_MSPCONFIGPATH=${CONFIG_ROOT}/crypto-config/peerOrganizations/gnk.aperam.com/users/Admin@gnk.aperam.com/msp
+ORG1_TLS_ROOTCERT_FILE=${CONFIG_ROOT}/crypto-config/peerOrganizations/gnk.aperam.com/peers/peer0.gnk.aperam.com/tls/ca.crt
+
+ORG2_MSPCONFIGPATH=${CONFIG_ROOT}/crypto-config/peerOrganizations/corp.aperam.com/users/Admin@corp.aperam.com/msp
+ORG2_TLS_ROOTCERT_FILE=${CONFIG_ROOT}/crypto-config/peerOrganizations/corp.aperam.com/peers/peer0.corp.aperam.com/tls/ca.crt
+
+ORDERER_TLS_ROOTCERT_FILE=${CONFIG_ROOT}/crypto-config/ordererOrganizations/aperam.com/orderers/orderer.aperam.com/msp/tlscacerts/tlsca.aperam.com-cert.pem
 set -x
 
 echo "Installing smart contract on peer0.gnk.aperam.com"
@@ -88,7 +90,7 @@ sleep 10
 echo "Submitting initLedger transaction to smart contract on aperamchannel (mychannel)"
 echo "The transaction is sent to the two peers with the chaincode installed (peer0.gnk.aperam.com and peer0.corp.aperam.com) so that chaincode is built before receiving the following requests"
 docker exec \
-  -e CORE_PEER_LOCALMSPID=Gnk1MSP \
+  -e CORE_PEER_LOCALMSPID=GnkMSP \
   -e CORE_PEER_MSPCONFIGPATH=${ORG1_MSPCONFIGPATH} \
   cli \
   peer chaincode invoke \

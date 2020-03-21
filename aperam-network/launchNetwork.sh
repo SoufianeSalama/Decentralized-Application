@@ -188,8 +188,8 @@ echo "##########################################################"
 echo "#####         Shutting the network down           ########"
 echo "##########################################################"
 
-#docker-compose -f $COMPOSE_FILE -f $COMPOSE_FILE_COUCH -f $COMPOSE_FILE_CA down --volumes --remove-orphans
-docker-compose -f $COMPOSE_FILE -f $COMPOSE_FILE_COUCH down --volumes --remove-orphans
+docker-compose -f $COMPOSE_FILE -f $COMPOSE_FILE_COUCH -f $COMPOSE_FILE_CA down --volumes --remove-orphans
+#docker-compose -f $COMPOSE_FILE -f $COMPOSE_FILE_COUCH down --volumes --remove-orphans
 # Clear docker containers
 CONTAINER_IDS=$(docker ps -a | awk '($2 ~ /dev-peer.*/) {print $1}')
 if [ -z "$CONTAINER_IDS" -o "$CONTAINER_IDS" == " " ]; then
@@ -226,11 +226,11 @@ checkPrereqs
     generateChannelArtifacts
   fi
   COMPOSE_FILES="-f ${COMPOSE_FILE}"
-  if [ "${CERTIFICATE_AUTHORITIES}" == "true" ]; then
+  #if [ "${CERTIFICATE_AUTHORITIES}" == "true" ]; then
     COMPOSE_FILES="${COMPOSE_FILES} -f ${COMPOSE_FILE_CA}"
     export BYFN_CA1_PRIVATE_KEY=$(cd crypto-config/peerOrganizations/gnk.aperam.com/ca && ls *_sk)
     export BYFN_CA2_PRIVATE_KEY=$(cd crypto-config/peerOrganizations/corp.aperam.com/ca && ls *_sk)
-  fi
+ # fi
 #   if [ "${CONSENSUS_TYPE}" == "kafka" ]; then
 #     COMPOSE_FILES="${COMPOSE_FILES} -f ${COMPOSE_FILE_KAFKA}"
 #   elif [ "${CONSENSUS_TYPE}" == "etcdraft" ]; then
@@ -239,6 +239,7 @@ checkPrereqs
 #   if [ "${IF_COUCHDB}" == "couchdb" ]; then
     COMPOSE_FILES="${COMPOSE_FILES} -f ${COMPOSE_FILE_COUCH}"
 #   fi
+
   IMAGE_TAG=$IMAGETAG docker-compose ${COMPOSE_FILES} up -d 2>&1
   docker ps -a
   if [ $? -ne 0 ]; then

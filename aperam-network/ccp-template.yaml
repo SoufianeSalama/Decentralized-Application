@@ -1,0 +1,34 @@
+---
+name: aperam-network-org${ORG}
+version: 1.0.0
+client:
+  organization: ${ORG}
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+organizations:
+  ${ORG}:
+    mspid: ${ORGANIZATION}MSP
+    peers:
+    - peer0.${ORG}.aperam.com
+    certificateAuthorities:
+    - ca.${ORG}.aperam.com
+peers:
+  peer0.${ORG}.aperam.com:
+    url: grpcs://localhost:${P0PORT}
+    tlsCACerts:
+      pem: |
+        ${PEERPEM}
+    grpcOptions:
+      ssl-target-name-override: peer0.${ORG}.aperam.com
+      hostnameOverride: peer0.${ORG}.aperam.com
+certificateAuthorities:
+  ca.${ORG}.aperam.com:
+    url: https://localhost:${CAPORT}
+    caName: ca-${ORG}
+    tlsCACerts:
+      pem: |
+        ${CAPEM}
+    httpOptions:
+      verify: false
