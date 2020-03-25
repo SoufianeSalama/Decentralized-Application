@@ -1,7 +1,7 @@
 {
-    "name": "blackcoil",
+    "name": "ScrapTracking",
     "version": "1.0.0",
-    "description": "BlackCoil contract implemented in JavaScript",
+    "description": "ScrapTracking contract implemented in JavaScript",
     "main": "index.js",
     "engines": {
         "node": ">=8",

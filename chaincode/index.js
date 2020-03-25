@@ -1,11 +1,11 @@
 /*
  * Soufiane Salama
- * Master's thesis: Black coil reception report
+ * Master's thesis: Track coil scrap
  */
 
 'use strict';
 
-const BlackCoil = require('./lib/blackcoil');
+const ScrapTracking = require('./lib/scraptracking');
 
-module.exports.BlackCoil = BlackCoil;
-module.exports.contracts = [ BlackCoil ];
+module.exports.ScrapTracking = ScrapTracking;
+module.exports.contracts = [ ScrapTracking ];
